@@ -68,11 +68,6 @@ Route::group(['prefix' => 'orders'], function() {
 Route::resource('roles', RolesController::class);
 
 /**
- * Products Permissions
- */
-Route::resource('permissions', PermissionsController::class);
-
-/**
  * Products Users
  */
 Route::resource('users', UserController::class);

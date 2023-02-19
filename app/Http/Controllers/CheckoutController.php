@@ -82,6 +82,6 @@ class CheckoutController extends Controller
             }
         }
         session()->put('cart', []);
-        return redirect()->back()->with('success', 'Your Order has been placed successfully.');
+        return redirect('cart')->with('success', 'Your Order has been placed successfully.');
     }
 }

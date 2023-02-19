@@ -14,7 +14,14 @@
                     <h3>
                         {{ __('Order Details') }}
                     </h3>
-                    <a class="btn btn-primary" href="{{ route('myOrders') }}"> {{ __('Go Back') }}</a>
+                    @auth
+                        @role('Admin')
+                        <a class="btn btn-primary" href="{{ route('Orders.index') }}"> {{ __('Go Back') }}</a>
+                        @endrole
+                        @role('Customer')
+                        <a class="btn btn-primary" href="{{ route('myOrders') }}"> {{ __('Go Back') }}</a>
+                        @endrole
+                    @endauth
                 </div>
 
                 <div class="card-body">
@@ -54,9 +61,13 @@
                     <h3>
                         {{ __('Ordered Items') }}
                     </h3>
-                    @if ($order->status == 'pending')
-                    <a class="btn btn-primary" href="{{ route('order.completed',$order->id) }}"> {{ __('Change status to delevered') }}</a>
-                    @endif
+                    @auth
+                        @role('Admin')
+                        @if ($order->status == 'pending')
+                        <a class="btn btn-primary" href="{{ route('order.completed',$order->id) }}"> {{ __('Change status to delevered') }}</a>
+                        @endif
+                        @endrole
+                    @endauth
                 </div>
 
                 <div class="card-body">

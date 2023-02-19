@@ -22,15 +22,19 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
         ]);
 
-        $role = Role::create(['name' => 'Admin']);
-
+        $roleAdmin = Role::create(['name' => 'Admin']);
         $permissions = Permission::pluck('id','id')->all();
-    
-        $role->syncPermissions($permissions);
-    
-        $user->assignRole([$role->name]);
+        $roleAdmin->syncPermissions($permissions);
+        $user->assignRole([$roleAdmin->name]);
 
-        Role::create(['name' => 'Employee']);
-        Role::create(['name' => 'Customer']);
+        $roleEmployee = Role::create(['name' => 'Employee']);
+        $roleEmployee->syncPermissions([
+            'products.index','products.create','products.store','products.show','logout','sanctum.csrf-cookie','password.request','password.email','password.reset','password.update','password.confirm'
+        ]);
+
+        $roleCustomer = Role::create(['name' => 'Customer']);
+        $roleCustomer->syncPermissions([
+            'products.index','products.show','cart','addToCart','updateCart','removeFromCart','checkout','placeOrder','myOrders','order.show','logout','sanctum.csrf-cookie','password.request','password.email','password.reset','password.update','password.confirm'
+        ]);
     }
 }
